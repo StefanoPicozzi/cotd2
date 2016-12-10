@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  labels:
+    app: cats
+  name: cats
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: cats:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/StefanoPicozzi/cotd
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: SELECTOR
+        value: cats
+      from:
+        kind: ImageStreamTag
+        name: php:5.6
+        namespace: openshift
+    type: Source
+  triggers:
+  - generic:
+      secret: ef14cfcc9a873be0
+    type: Generic
+  - github:
+      secret: 10aae8c1b5a475de
+    type: GitHub
+status:
+  lastVersion: 0

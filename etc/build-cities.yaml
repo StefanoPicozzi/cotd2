@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  labels:
+    app: cities
+  name: cities
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: cities:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/StefanoPicozzi/cotd
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: SELECTOR
+        value: cities
+      from:
+        kind: ImageStreamTag
+        name: php:5.6
+        namespace: openshift
+    type: Source
+  triggers:
+  - generic:
+      secret: b05ab6584aa3008f
+    type: Generic
+  - github:
+      secret: ea4b24f8d179f7a8
+    type: GitHub
+status:
+  lastVersion: 0

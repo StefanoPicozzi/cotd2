@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: cotdcicdpipeline
+  labels:
+    name: cotdcicdpipeline
+  annotations:
+    pipeline.alpha.openshift.io/uses: '[{"name": "cotdcicd", "namespace": "", "kind": "DeploymentConfig"}]'
+spec:
+  triggers:
+    -
+      type: GitHub
+      github:
+        secret: secret101
+    -
+      type: Generic
+      generic:
+        secret: secret101
+  runPolicy: Serial
+  source:
+    type: None
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: "node('maven') {\n\
+      \nstage '==> Build&Deploy-In-Development'\n\ 
+      \nopenshiftBuild(namespace: 'development', buildConfig: 'cats', showBuildLogs: 'true', waitTime: '300000')\
+      \nopenshiftBuild(namespace: 'development', buildConfig: 'cities', showBuildLogs: 'true', waitTime: '300000')\
+      \nstage '==> Verify-In-Development'\n\
+      \nopenshiftVerifyDeployment(namespace: 'development', deploymentConfig: 'cats', replicaCount: '1')\
+      \nopenshiftVerifyDeployment(namespace: 'development', deploymentConfig: 'cities', replicaCount: '1')\
+      \n\nstage '==> Tag-Image-in-Development'\n\
+      \nopenshiftTag(namespace: 'development', sourceStream: 'cats', sourceTag: 'latest', destinationStream: 'cats', destinationTag: 'promoteQA')\
+      \nopenshiftTag(namespace: 'development', sourceStream: 'cities', sourceTag: 'latest', destinationStream: 'cities', destinationTag: 'promoteQA')\
+      \n\nstage '==> Deploy-In-Testing' \n\
+      \nopenshiftDeploy(namespace: 'testing', deploymentConfig: 'cats', waitTime: '300000')\
+      \nopenshiftDeploy(namespace: 'testing', deploymentConfig: 'cities', waitTime: '300000')\
+      \n\nstage '==> Scale-In-Testing' \n\
+      \nopenshiftScale(namespace: 'testing', deploymentConfig: 'cats', replicaCount: '2', waitTime: '300000')\
+      \nopenshiftScale(namespace: 'testing', deploymentConfig: 'cities', replicaCount: '2', waitTime: '300000')\
+      \nstage '==> Verify-In-Testing'\n\
+      \nopenshiftVerifyDeployment(namespace: 'testing', deploymentConfig: 'cats', replicaCount: '2')\
+      \nopenshiftVerifyDeployment(namespace: 'testing', deploymentConfig: 'cities', replicaCount: '2')\
+      \n\n}\n"
+  output:
+  resources:
+  postCommit:

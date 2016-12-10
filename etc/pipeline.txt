@@ -1,0 +1,11 @@
+node('maven') {
+stage '==> Build-In-Development'
+openshiftBuild(namespace: 'development', buildConfig: 'cotd', showBuildLogs: 'true')
+stage '==> Deploy-In-Development'
+openshiftDeploy(namespace: 'development', deploymentConfig: 'cotd')
+openshiftScale(namespace: 'development', deploymentConfig: 'cotd',replicaCount: '2')
+stage '==> Deploy-In-Testing'
+openshiftTag(namespace: 'development', sourceStream: 'cotd',  sourceTag: 'latest', destinationStream: 'cotd', destinationTag: 'promoteToQA')
+openshiftDeploy(namespace: 'testing', deploymentConfig: 'cotd', )
+openshiftScale(namespace: 'testing', deploymentConfig: 'cotd',replicaCount: '3')
+}
