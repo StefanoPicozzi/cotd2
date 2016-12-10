@@ -8,6 +8,9 @@ Date: 2016
 <?php
 
 $ini_file = '/etc/config/cotd.properties';                                                                                                               
+
+// Test if OpenShift Online V2
+$db = getenv('OPENSHIFT_MYSQL_DB_HOST');
                                                                                                                                                             
 // Determine active theme default to cats                                                                                                         
 if ( $selector = getenv('SELECTOR') ) {                                                                                                                     
@@ -15,12 +18,11 @@ if ( $selector = getenv('SELECTOR') ) {
 } elseif ( file_exists($ini_file) ) {                                                                                                                       
     $ini_array = parse_ini_file($ini_file);                                                                                                                 
     $_SESSION['selector'] = $ini_array['selector'];                                                                                                         
+} elseif ( ! empty($db) ) {
+    $_SESSION['selector'] = 'pets'; 
 } else {                                                                                                                                                    
     $_SESSION['selector'] = 'cats';                                                                                                                         
 }                                        
-
-// Test if OpenShift Online V2
-$db = getenv('OPENSHIFT_MYSQL_DB_HOST');
 
 // Populate theme using local file or remote REST Service or DB
 if ( $service = getenv('SERVICE') ) {                                                                                                                     
