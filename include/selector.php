@@ -15,7 +15,7 @@ if ( !empty(getenv('OPENSHIFT_MYSQL_DB_HOST')) ) {
     $_SESSION['DBPORT'] = getenv('OPENSHIFT_MYSQL_DB_PORT');
     $_SESSION['DBUSER'] = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
     $_SESSION['DBPASSWORD'] = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
-    $_SESSION['DBNAME'] = 'cotd2';
+    $_SESSION['DBNAME'] = 'cotd';
     $_SESSION['V2'] = 'true';
     $_SESSION['DB'] = 'true';
 } else if ( !empty(getenv('DBHOST')) ) {
