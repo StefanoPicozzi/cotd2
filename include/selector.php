@@ -23,6 +23,9 @@ if ( !empty(getenv('OPENSHIFT_MYSQL_DB_HOST')) ) {
     $_SESSION['DB'] = 'true';
 }
 
+    echo $_SESSION['V2'] = 'true';
+    echo $_SESSION['DB'] = 'true';
+
 // Determine active theme default to cats                                                                                                         
 $_SESSION['selector'] = 'cats';
 if ( $selector = getenv('SELECTOR') ) {                                                                                                                     
