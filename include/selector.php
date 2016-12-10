@@ -12,7 +12,7 @@ $ini_file = '/etc/config/cotd.properties';
 $dbv2 = getenv('OPENSHIFT_MYSQL_DB_HOST');
 $dbv3 = getenv('DBHOST');
 
-// Test if OpenShift Online V2
+// Test if DB is OpenShift Online V2 or V3 Trial
 if ( !empty($dbv2) ) {
     $_SESSION['DBHOST'] = getenv('OPENSHIFT_MYSQL_DB_HOST');
     $_SESSION['DBPORT'] = getenv('OPENSHIFT_MYSQL_DB_PORT');
