@@ -9,8 +9,11 @@ Date: 2016
 
 $ini_file = '/etc/config/cotd.properties';                                                                                                               
 
+$dbv2 = getenv('OPENSHIFT_MYSQL_DB_HOST');
+$dbv3 = getenv('DBHOST');
+
 // Test if OpenShift Online V2
-if ( !empty(getenv('OPENSHIFT_MYSQL_DB_HOST')) ) {
+if ( !empty($dbv2) ) {
     $_SESSION['DBHOST'] = getenv('OPENSHIFT_MYSQL_DB_HOST');
     $_SESSION['DBPORT'] = getenv('OPENSHIFT_MYSQL_DB_PORT');
     $_SESSION['DBUSER'] = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
@@ -18,7 +21,12 @@ if ( !empty(getenv('OPENSHIFT_MYSQL_DB_HOST')) ) {
     $_SESSION['DBNAME'] = 'cotd';
     $_SESSION['V2'] = 'true';
     $_SESSION['DB'] = 'true';
-} else if ( !empty(getenv('DBHOST')) ) {
+} else if ( !empty($dbv3) ) {
+    $_SESSION['DBHOST'] = getenv('DBHOST');
+    $_SESSION['DBPORT'] = getenv('DBPORT');
+    $_SESSION['DBUSER'] = getenv('DBUSER');
+    $_SESSION['DBPASSWORD'] = getenv('DBPASSWORD');
+    $_SESSION['DBNAME'] = getenv('DBNAME');
     $_SESSION['V3'] = 'true';
     $_SESSION['DB'] = 'true';
 }
