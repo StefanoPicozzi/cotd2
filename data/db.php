@@ -9,20 +9,13 @@ Date: 2016
 
 // Populate using direct DB access
 
-//$mysql_hostname = '127.0.0.1';
-//$mysql_port     = '3306';
-//$mysql_username = 'root';
-//$mysql_dbname   = 'default';
-//$mysql_password = 'password';
+if ( empty($_SESSON['DBHOST']) ) { return; }
 
-$db = getenv('OPENSHIFT_MYSQL_DB_HOST');
-if ( empty($db) ) { return; }
-
-$mysql_hostname = getenv('OPENSHIFT_MYSQL_DB_HOST');
-$mysql_port     = getenv('OPENSHIFT_MYSQL_DB_PORT');
-$mysql_username = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
-$mysql_dbname   = 'cotd2';
-$mysql_password = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
+$mysql_hostname = $_SESSION['DBHOST'];
+$mysql_port     = $_SESSION['DBPORT'];
+$mysql_username = $_SESSION['DBUSER'];
+$mysql_dbname   = $_SESSION['DBNAME'];
+$mysql_password = $_SESSION['DBPASSWORD'];
 
 try {
     $dbh = new PDO("mysql:host=$mysql_hostname;port=$mysql_port;dbname=$mysql_dbname", $mysql_username, $mysql_password);
