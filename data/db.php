@@ -9,7 +9,7 @@ Date: 2016
 
 // Populate using direct DB access
 
-if ( empty($_SESSON['DBHOST']) ) { return; }
+if ( empty($_SESSION['DBHOST']) ) { return; }
 
 $mysql_hostname = $_SESSION['DBHOST'];
 $mysql_port     = $_SESSION['DBPORT'];
