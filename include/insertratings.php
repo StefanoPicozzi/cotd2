@@ -21,7 +21,7 @@ if ( empty($db) ) { return; }
 $mysql_hostname = getenv('OPENSHIFT_MYSQL_DB_HOST');
 $mysql_port     = getenv('OPENSHIFT_MYSQL_DB_PORT');
 $mysql_username = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
-$mysql_dbname   = 'cotd';
+$mysql_dbname   = 'cotd2';
 $mysql_password = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
 
 try {
