@@ -33,7 +33,9 @@ if ( !empty($dbv2) ) {
 
 // Determine active theme default to cats                                                                                                         
 $_SESSION['selector'] = 'cats';
-if ( $selector = getenv('SELECTOR') ) {                                                                                                                     
+$selector = getenv('SELECTOR');
+
+if ( !empty($selector) ) {                                                                                                                     
     $_SESSION['selector'] = $selector;                                                                                                                      
 } elseif ( file_exists($ini_file) ) {                                                                                                                       
     $ini_array = parse_ini_file($ini_file);                                                                                                                 
@@ -42,8 +44,9 @@ if ( $selector = getenv('SELECTOR') ) {
     $_SESSION['selector'] = 'pets'; 
 }                                        
 
+$service = getenv('SERVICE');
 // Populate theme using local file or remote REST Service or DB
-if ( $service = getenv('SERVICE') ) {                                                                                                                     
+if ( !empty($service) ) {                                                                                                                     
     include('data/rest.php');
 } elseif ( $_SESSION['DB'] == 'true' ) {
     include('data/db.php');
