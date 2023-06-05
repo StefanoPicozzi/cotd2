@@ -41,7 +41,7 @@ function get_client_ip() {
     return $ipaddress;
 }
 
-parse_str($_SERVER['QUERY_STRING']);
+//parse_str($_SERVER['QUERY_STRING']);
 
 if ( isset($nextpage) ) { 
 	$item = $nextpage;
